@@ -37,12 +37,31 @@ public class MainActivity extends Activity implements SensorEventListener{
 
     }
 
+    // метод, который определяет по показаниям акселерометра
+    // передаваемым ему как параметры (х и у)
+    // в каком направлении должна двигаться змея
+    private int getDirection(float x, float y) {
+        if (Math.abs(x) > Math.abs(y)) {
+            if (x > 0) {
+                return mazeView.LEFT;
+            } else {
+                return mazeView.RIGHT;
+            }
+        } else {
+            if (y > 0) {
+                return mazeView.BOTTOM;
+            } else {
+                return mazeView.TOP;
+            }
+        }
+    }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
         xy_angle = event.values[0]; //Плоскость XY
         xz_angle = event.values[1]; //Плоскость XZ
 
+       mazeView.setDirection(this.getDirection(xy_angle, xz_angle));
         // передаем в нашу повержность координаты телефона в пространстве
         mazeView.setXY(xy_angle, xz_angle);
 

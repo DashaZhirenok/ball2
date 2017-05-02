@@ -20,7 +20,7 @@ public class GraphUpdater extends TimerTask{
         if (c!=null){
             mazeView.drawBackGround(c);
             mazeView.drawMaze(c);
-            mazeView.drawOwl(c);
+          //  mazeView.drawOwl(c);
             mazeView.getHolder().unlockCanvasAndPost(c);
         }
     }
