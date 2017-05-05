@@ -10,7 +10,8 @@ import java.util.TimerTask;
 public class GraphUpdater extends TimerTask{
     MazeView mazeView;
 
-    GraphUpdater(MazeView mazeView){
+    GraphUpdater(MazeView mazeView)
+    {
         this.mazeView=mazeView;
     }
 
@@ -18,6 +19,7 @@ public class GraphUpdater extends TimerTask{
     public void run() {
         Canvas c = mazeView.getHolder().lockCanvas();
         if (c!=null){
+            mazeView.Update();
             mazeView.drawBackGround(c);
             mazeView.drawMaze(c);
           //  mazeView.drawOwl(c);
