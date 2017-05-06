@@ -17,10 +17,10 @@ public class MainActivity extends Activity implements SensorEventListener{
     private Sensor mOrientation;
 
     Timer timer;
+    boolean firstTime;
     private float xy_angle=0;
     private float xz_angle=0;
     MazeView mazeView;
-    boolean firstTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class MainActivity extends Activity implements SensorEventListener{
         mazeView=new MazeView(this);
         setContentView(mazeView);
 
-        //запустим таймер, узнаем высоту\ширину экрана
+        //запустим таймер
         timer = new Timer();
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE); // Получаем менеджер сенсоров
@@ -62,6 +62,17 @@ public class MainActivity extends Activity implements SensorEventListener{
                 SensorManager.SENSOR_DELAY_GAME);
         this.firstTime = true;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+    // Обрабатываем остановку активити
+    @Override
+    public void onStop() {
+        super.onStop();
+        // Останавливаем таймеры
+        timer.cancel();
+        timer.purge();
+        // Отписываемся от получения сообщений об изменении
+        // от датчика
+        mSensorManager.unregisterListener(this);
     }
 
     @Override

@@ -37,7 +37,7 @@ public class Menu extends AppCompatActivity {
                     break;
                 case R.id.btnPlay:
                     Intent gotoPlay = new Intent();
-                    gotoPlay.setClass(Menu.this, MainActivity.class);
+                    gotoPlay.setClass(Menu.this, MazeActivity.class);
                     startActivity(gotoPlay);
             }
 
