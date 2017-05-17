@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".Menu"
+            android:name=".MenuActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +22,11 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity android:name=".MazeActivity" >
+        </activity>
+        <activity
+            android:name=".InformationActivity"
+            android:label="@string/title_activity_information"
+            android:theme="@style/AppTheme" >
         </activity>
     </application>
 

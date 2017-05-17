@@ -2,6 +2,7 @@ package com.example.duska.axelerom;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -33,7 +34,7 @@ public class MainActivity extends Activity implements SensorEventListener{
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE); // Получаем менеджер сенсоров
         mOrientation = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); // Получаем датчик положения
-        mSensorManager.registerListener(this, mOrientation, SensorManager.SENSOR_DELAY_NORMAL);
+        mSensorManager.registerListener(this, mOrientation, SensorManager.SENSOR_DELAY_NORMAL);//частота измерений
 
     }
 
@@ -55,6 +56,8 @@ public class MainActivity extends Activity implements SensorEventListener{
         super.onStart();
         // Запускаем таймер обновления картинки на экране
         timer.scheduleAtFixedRate(new GraphUpdater(mazeView), 0, 100);
+        // Запускаем таймер обновления положения змейки
+        timer.scheduleAtFixedRate(new StepUpdater(this), 0, 500);
 
         // регистрируем нашу форму как объект слушающий
         // изменения датчика - акселерометра
@@ -78,6 +81,23 @@ public class MainActivity extends Activity implements SensorEventListener{
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    // Этот метод вызывается из потока одного из таймеров
+
+    public void Step() {
+        // Если мы взяли ключик, то открываем другую активи
+        if (mazeView.collisionWithKey) {
+            MazeActivity.GAME_MODE=1;
+            Intent gotoMazeActivity = new Intent(this, MazeActivity.class);
+            startActivity(gotoMazeActivity);
+            this.finish();
+
+        }
+        // Если все впорядке то оставляем стартовую активи
+        else{
+            MazeActivity.GAME_MODE=0;
+        }
     }
 
 

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-public class Menu extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity {
 
     ImageView btnAbout, btnPlay, btnName;
 
@@ -30,14 +30,16 @@ public class Menu extends AppCompatActivity {
             switch (v.getId())
             {
                 case R.id.btnAbout:
-                    //to do
+                    Intent gotoInformation = new Intent();
+                    gotoInformation.setClass(MenuActivity.this, InformationActivity.class);
+                    startActivity(gotoInformation);
                     break;
                 case R.id.btnName:
                     //to do
                     break;
                 case R.id.btnPlay:
                     Intent gotoPlay = new Intent();
-                    gotoPlay.setClass(Menu.this, MazeActivity.class);
+                    gotoPlay.setClass(MenuActivity.this, MainActivity.class);
                     startActivity(gotoPlay);
             }
 

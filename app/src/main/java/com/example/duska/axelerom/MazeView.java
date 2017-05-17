@@ -13,12 +13,18 @@ import android.view.SurfaceView;
  */
 public class MazeView extends SurfaceView {
 
+    //0 - пустое пространство
+    //1 - стены
+    //2 - подставные стены
+    //3,4,5 - черные дыры
+    //6 - ключик
     float dx=0, dy=0;
     float myX=50, myY=1150;
     float newX=0,newY=0;
     float speed = 0.8f;
-    Bitmap bitmapOwl, bitmapTileOfMaze, bitmapBackGround, bitmapHole, bitmapTileOfMaze2, bitmapFlag;
+    Bitmap bitmapOwl, bitmapTileOfMaze, bitmapBackGround, bitmapHole, bitmapTileOfMaze2, bitmapKey;
     Paint paint = new Paint();
+    Boolean collisionWithKey=false;
 
     public static int mFieldX = 56; //73
     public static int mFieldY = 36; //59
@@ -39,7 +45,7 @@ public class MazeView extends SurfaceView {
             {1,0,0,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1},
             {1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1},
             {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1},
-            {1,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,0,3,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1},
+            {1,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,0,3,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1},
             {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1},
             {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1},
             {1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,1},
@@ -55,8 +61,8 @@ public class MazeView extends SurfaceView {
             {1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1},
             {1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1},
             {1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1,1},
-            {1,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,0,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
             {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
             {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
             {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -78,8 +84,8 @@ public class MazeView extends SurfaceView {
                 R.drawable.grass);
         bitmapHole = BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.hole);
-        bitmapFlag = BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.flag);
+        bitmapKey = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.key);
 
     }
 
@@ -125,9 +131,36 @@ public class MazeView extends SurfaceView {
                             mField[i][j]=0;
                         }
                 }
+                else if(mField[i][j]==5)
+                {
+                    if(isCollisionX(newX, i))
+                        if(isCollisionY(newY, j)) {
+                            myX=400;
+                            myY=400;
+                            mField[i][j]=0;
+                        }
+                }
+                else if(mField[i][j]==4)
+                {
+                    if(isCollisionX(newX, i))
+                        if(isCollisionY(newY, j)) {
+                            myX=100;
+                            myY=800;
+                            mField[i][j]=0;
+                        }
+                }
+
+                else if(mField[i][j]==6)
+                {
+                    if(isCollisionX(newX, i))
+                        if(isCollisionY(newY, j)) {
+                            mField[i][j]=0;
+                            collisionWithKey=true;
+                        }
+                }
             }
            float coeff = 0.8f;//
-           float coeff2 = 0.2f;//
+           float coeff2 = 0.6f;//
             dx *= (collisionResultX ? -coeff2 : coeff);
             dy *= (collisionResultY ? -coeff2 : coeff);
             myX = myX + dx;
@@ -157,6 +190,7 @@ public class MazeView extends SurfaceView {
         return ((owlA <= tileA && tileA <= owlB) || (owlA <= tileB && tileB <= owlB));
 
     }
+
     int width;
     int height;
     void drawMaze(Canvas c)
@@ -171,7 +205,7 @@ public class MazeView extends SurfaceView {
         Bitmap bitmapTileOfMaze_ = Bitmap.createScaledBitmap(bitmapTileOfMaze,mX,mY,true);
         Bitmap bitmapTileOfMaze2_ = Bitmap.createScaledBitmap(bitmapTileOfMaze2,mX,mY,true);
         Bitmap bitmapOwl_ = Bitmap.createScaledBitmap(bitmapOwl, width/12, height/18, true);
-        Bitmap bitmapFlag_ = Bitmap.createScaledBitmap(bitmapFlag, width/8, height/13, true);
+        Bitmap bitmapKey_ = Bitmap.createScaledBitmap(bitmapKey, width/8, height/13, true);
         Bitmap bitmapHole_ = Bitmap.createScaledBitmap(bitmapHole, width/12, height/17, true);
 
         paint.setColor(Color.BLUE);
@@ -181,7 +215,7 @@ public class MazeView extends SurfaceView {
                 if(mField[i][j]==1) {
                     c.drawBitmap(bitmapTileOfMaze_, mX * i, mY * j, paint);
                 }
-                if(mField[i][j]==3 )
+                if(mField[i][j]==3 || mField[i][j]==4 || mField[i][j]==5)
                 {
                     c.drawBitmap(bitmapHole_, mX * i, mY * j, paint);
                 }
@@ -189,9 +223,9 @@ public class MazeView extends SurfaceView {
                 {
                     c.drawBitmap(bitmapTileOfMaze2_, mX * i, mY * j, paint);
                 }
-                if(mField[i][j]==4 )
+                if(mField[i][j]==6 )
                 {
-                    c.drawBitmap(bitmapFlag_, mX * i, mY * j, paint);
+                    c.drawBitmap(bitmapKey_, mX * i, mY * j, paint);
                 }
 
             }

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/menu"
 
-    tools:context="com.example.duska.axelerom.Menu">
+    tools:context="com.example.duska.axelerom.MenuActivity">
 
 
     <ImageView

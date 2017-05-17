@@ -8,16 +8,16 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-public class MazeActivity extends AppCompatActivity implements View.OnClickListener {
+public class MazeActivity extends AppCompatActivity  {
 
-    Button firstButton, secondButton;
-    TextView textView1;
+    private Button btnReturn, btnMenu;
+    private TextView textView1;
 
     // режим запуска активити - 0 первый запуск
-    // 1 - запуск активити после проигрыша
+    // 1 - запуск активити, если проигрыш
     public static int GAME_MODE=0;
 
-    public static int GAME_SCORE=0;
+    public static int GAME_TIME=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,27 +27,50 @@ public class MazeActivity extends AppCompatActivity implements View.OnClickListe
     public void onStart(){
         super.onStart();
         // загрузка разных разметок
-        if (GAME_MODE==0){
+        if (GAME_MODE==1)
+        /*{
             setContentView(R.layout.activity_maze);
             firstButton = (Button) this.findViewById(R.id.firstButton);
             firstButton.setOnClickListener(this);
         }
-        else
+        else*/
         {
-            setContentView(R.layout.activity_maze2);
-            secondButton = (Button) this.findViewById(R.id.secondButton);
+            setContentView(R.layout.activity_maze);
+            btnReturn = (Button) this.findViewById(R.id.btnReturn);
+            btnMenu = (Button) this.findViewById(R.id.btnMenu);
             textView1 = (TextView) this.findViewById(R.id.textView1);
-            textView1.setText("Your score: "+GAME_SCORE);
-            secondButton.setOnClickListener(this);
+            textView1.setText("Your time: "+GAME_TIME);
+            btnReturn.setOnClickListener(clickOnButton);
+            btnMenu.setOnClickListener(clickOnButton);
         }
     }
 
-    public void onClick(View v) {
-        // Для любой разметки если мы нажимем на кнопку, то игра запускается
-        Intent gotoGame = new Intent(this, MainActivity.class);
-        GAME_MODE=0;
-        GAME_SCORE=0;
-        this.startActivity(gotoGame);
-    }
+    View.OnClickListener clickOnButton = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId())
+            {
+                case (R.id.btnMenu):
+                {
+                    Intent gotoMenu = new Intent(MazeActivity.this, MenuActivity.class);
+                    GAME_MODE = 0;
+                    GAME_TIME = 0;
+                    startActivity(gotoMenu);
+                    MazeActivity.this.finish();
+                    break;
+                }
+                case (R.id.btnReturn): {
+                    Intent gotoGame = new Intent(MazeActivity.this, MainActivity.class);
+                    GAME_MODE = 0;
+                    GAME_TIME = 0;
+                    startActivity(gotoGame);
+                    MazeActivity.this.finish();
+                    break;
+                }
+            }
+
+        }
+    };
+
 
 }

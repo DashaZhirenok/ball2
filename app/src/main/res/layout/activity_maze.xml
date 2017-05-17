@@ -1,17 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/image2"
+    android:background="@drawable/endscreen"
+
     tools:context="com.example.duska.axelerom.MazeActivity">
 
     <Button
-        android:layout_width="270dp"
-        android:layout_height="120dp"
-        android:id="@+id/firstButton"
-        android:layout_marginBottom="136dp"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:drawableTop="@drawable/ic_refresh"
+        android:id="@+id/btnReturn"
+        android:layout_marginTop="108dp"
         android:background="#00ffffff"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/textView1"
+        android:layout_toStartOf="@+id/textView1" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textView1"
+        android:text="some text"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff"
+        android:textSize="24dp" />
 
+    <Button
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:drawableTop="@drawable/ic_no"
+        android:id="@+id/btnMenu"
+        android:layout_alignTop="@+id/btnReturn"
+        android:layout_toEndOf="@+id/textView1"
+        android:background="#00ffffff" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_marginBottom="24dp"
+        android:layout_marginRight="24dp"
+        android:textSize="24dp"
+        android:layout_above="@+id/btnMenu"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/textViewForName"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Your name:"
+        android:id="@+id/textViewForName"
+        android:textColor="#ffffff"
+        android:textSize="24dp"
+        android:layout_alignBottom="@+id/editText"
+        android:layout_alignStart="@+id/btnReturn" />
 </RelativeLayout>

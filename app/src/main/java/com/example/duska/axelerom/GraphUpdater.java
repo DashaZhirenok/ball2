@@ -22,7 +22,7 @@ public class GraphUpdater extends TimerTask{
             mazeView.Update();
             mazeView.drawBackGround(c);
             mazeView.drawMaze(c);
-          //  mazeView.drawOwl(c);
+           // mazeView.drawOwl(c);
             mazeView.getHolder().unlockCanvasAndPost(c);
         }
     }
