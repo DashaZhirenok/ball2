@@ -35,7 +35,9 @@ public class MenuActivity extends AppCompatActivity {
                     startActivity(gotoInformation);
                     break;
                 case R.id.btnName:
-                    //to do
+                    Intent gotoResults = new Intent();
+                    gotoResults.setClass(MenuActivity.this, ResultsActivity.class);
+                    startActivity(gotoResults);
                     break;
                 case R.id.btnPlay:
                     Intent gotoPlay = new Intent();

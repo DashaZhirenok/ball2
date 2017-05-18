@@ -122,7 +122,7 @@ public class MazeView extends SurfaceView {
                             mField[i][j]=1;
                         }
                 }
-                else if(mField[i][j]==3)
+                else if(mField[i][j]==6)
                 {
                     if(isCollisionX(newX, i))
                         if(isCollisionY(newY, j)) {
@@ -150,7 +150,7 @@ public class MazeView extends SurfaceView {
                         }
                 }
 
-                else if(mField[i][j]==6)
+                else if(mField[i][j]==3)
                 {
                     if(isCollisionX(newX, i))
                         if(isCollisionY(newY, j)) {

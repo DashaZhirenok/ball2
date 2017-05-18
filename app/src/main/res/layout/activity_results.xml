@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
@@ -10,7 +9,7 @@
     tools:context="com.example.duska.axelerom.ResultsActivity">
     <ImageView
         android:layout_width="match_parent"
-        android:src="@drawable/rules"
+        android:src="@drawable/results"
         android:layout_height="70dp" />
 
     <ScrollView
@@ -18,15 +17,15 @@
         android:layout_height="fill_parent"
         android:fillViewport="true"
         android:orientation="vertical"
+        android:background="@drawable/grass"
         android:weightSum="1">
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/ImageInfo"
-            android:background="@drawable/grassinfo2"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
 
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvResults"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
     </ScrollView>
 </LinearLayout>
