@@ -6,7 +6,7 @@
     android:layout_height="fill_parent"
     android:fillViewport="true"
     android:orientation="vertical"
-    android:background="@drawable/grass"
+    android:background="@drawable/screengrass"
     tools:context="com.example.duska.axelerom.ResultsActivity">
     <ImageView
         android:layout_width="match_parent"

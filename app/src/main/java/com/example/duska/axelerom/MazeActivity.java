@@ -1,6 +1,8 @@
 package com.example.duska.axelerom;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -10,15 +12,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 
 public class MazeActivity extends AppCompatActivity  {
 
     private Button btnReturn, btnMenu, btnOk;
     private TextView textView1;
     private EditText editText;
-    public ArrayList<String> arrayNames;
+    private DBHelper dbHelper;
 
     // режим запуска активити - 0 первый запуск
     // 1 - запуск активити, если проигрыш
@@ -28,19 +28,16 @@ public class MazeActivity extends AppCompatActivity  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
     }
     @Override
     public void onStart(){
         super.onStart();
-        // загрузка разных разметок
+
+
+        // загрузка разметки
         if (GAME_MODE==1)
-        /*{
-            setContentView(R.layout.activity_maze);
-            firstButton = (Button) this.findViewById(R.id.firstButton);
-            firstButton.setOnClickListener(this);
-        }
-        else*/
         {
             setContentView(R.layout.activity_maze);
 
@@ -51,6 +48,9 @@ public class MazeActivity extends AppCompatActivity  {
             editText = (EditText) this.findViewById(R.id.editText);
 
             textView1.setText("Your time: "+GAME_TIME);
+
+            // объект класса, работающего с бд
+            dbHelper = new DBHelper(this);
 
             btnReturn.setOnClickListener(clickOnButton);
             btnMenu.setOnClickListener(clickOnButton);
@@ -87,11 +87,20 @@ public class MazeActivity extends AppCompatActivity  {
                     }
                     else
                     {
-                        arrayNames = new ArrayList<String>();
-                        String tmp;
-                        tmp=editText.getText().toString();
-                        arrayNames.add(tmp);
+                        String playerName;
+                        playerName=editText.getText().toString();
+
+                        SQLiteDatabase database = dbHelper.getWritableDatabase();
+                        ContentValues contentValues = new ContentValues();
+                        // добавим данные в таблицу
+                        contentValues.put(DBHelper.KEY_PLAYERNAME, playerName);
+                        contentValues.put(DBHelper.KEY_TIME, 0);
+                        database.insert(DBHelper.TABLE_RESULTS, null, contentValues);
+
+
                         Toast.makeText(getApplicationContext(), "Ваш результат записан!", Toast.LENGTH_SHORT).show();
+                        dbHelper.close();
+                        break;
                     }
                 }
             }

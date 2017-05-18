@@ -230,7 +230,6 @@ public class MazeView extends SurfaceView {
 
             }
 
-       // c.drawBitmap(bitmapFlag_, 600, 50, paint);
         c.drawBitmap(bitmapOwl_, myX, myY, paint);
 
     }
