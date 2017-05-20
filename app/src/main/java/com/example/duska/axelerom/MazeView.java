@@ -25,6 +25,8 @@ public class MazeView extends SurfaceView {
     Bitmap bitmapOwl, bitmapTileOfMaze, bitmapBackGround, bitmapHole, bitmapTileOfMaze2, bitmapKey;
     Paint paint = new Paint();
     Boolean collisionWithKey=false;
+    double startTime=0;
+    double lastTime=0;
 
     public static int mFieldX = 56; //73
     public static int mFieldY = 36; //59

@@ -42,7 +42,7 @@ public class ResultsActivity extends AppCompatActivity {
                 //используем индекс для получения строки
                 String currentPlayerName = cursor.getString(playerNameColumnIndex);
                 arrayNames.add(currentPlayerName);
-                double currentTime = cursor.getInt(timeColumnIndex);
+                double currentTime = cursor.getDouble(timeColumnIndex);
                 arrayTime.add(currentTime);
                 //выведем в логи таблицу
                 Log.d("mLog", "name = " + arrayNames +

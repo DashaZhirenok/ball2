@@ -8,6 +8,7 @@ import java.util.TimerTask;
 public class StepUpdater extends TimerTask {
 
     MainActivity mainActivity;
+
     StepUpdater(MainActivity mainActivity){
         this.mainActivity = mainActivity;
     }
